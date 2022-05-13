@@ -7,6 +7,7 @@
 #     * Change value for "resource" to your miner's IP. Be sure that you can access your miniz web interface via your web browser to make
 #       sure that these rest entities can grab data from there.
 #     * Change wallet address for the minerpool rest integration (line #327)
+#     * GPU sensor sections can be replicated to meet the number of gpus in your rig
 #
 sensor:
   - platform: rest
