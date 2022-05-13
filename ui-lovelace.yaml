@@ -1,1 +1,323 @@
 # UI Component of the integration
+# miniz-hass https://github.com/saad-akhtar/miniz-hass
+#
+#
+# Paste this in your Home-Assistant ui-lovelace.yaml. This will create a POW (Proof of Work) tab in your UI.
+#
+#
+resources:
+  - url: /hacsfiles/lovelace-clock-card/clock-card.js
+    type: module
+  - url: /hacsfiles/gauge-card/gauge-card.js
+    type: module
+  - url: /hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js?v=0.3.2
+    type: js
+  - url: /hacsfiles/apexcharts-card/apexcharts-card.js
+    type: module
+#
+title: "HASS"
+views:
+# POW FLUX Section
+  - title: "POW MINING"
+    cards:
+      - type: vertical-stack
+        cards:
+# Clock Card
+          - type: "custom:clock-card"
+            time_zone: "America/Chicago" #OPTIONAL
+            size: 250 #OPTIONAL
+            disable_seconds: false #OPTIONAL
+#
+          - type: gauge
+            entity: sensor.minerpool_flux_data_reported_hash
+            name: "Pool Side Hashrate"
+            needle: true
+            min: 0
+            max: 250
+            severity:
+              red: 0
+              yellow: 40
+              orange: 90
+              blue: 110
+              green: 140
+#
+          - type: entities
+            entities:
+              - entity: sensor.miniz_miner_start_time
+                name: MiniZ Startup
+              - entity: sensor.minerpool_flux_data_immature_balance
+                name: Immature Balance
+              - entity: sensor.minerpool_flux_data_confirmed_balance
+                name: Confirmed Balance
+              - entity: sensor.minerpool_flux_data_paid_flux
+                name: Total FLUX Paid
+              - entity: sensor.miniz_miner_current_server
+                name: Pool URL
+              - entity: sensor.miniz_miner_server_latency
+                name: Pool Latency
+              - entity: sensor.miniz_miner_algo
+                name: Algorithm
+              - entity: sensor.miniz_miner_pers
+                name: PERS
+              - entity: sensor.miniz_miner_version
+                name: Version
+#
+#
+# GPU 0 SECTION
+      - type: vertical-stack
+        cards:
+#
+          - type: gauge
+            entity: sensor.miniz_json_miner_gpu_0_temperature
+            name: "GPU 0 Temperature"
+            needle: true
+            min: 40
+            max: 90
+            severity:
+              blue: 0
+              yellow: 58
+              red: 61
+#
+          - type: horizontal-stack
+            cards:
+              - type: custom:apexcharts-card
+                graph_span: 24h
+                header:
+                  show: true
+                  title: "Sols/second"
+                  show_states: false
+                  disable_actions: true
+                series:
+                  - entity: sensor.miniz_json_miner_gpu_0_sps
+                    type: area
+                    fill_raw: last
+                    color: yellow
+#
+              - type: custom:apexcharts-card
+                graph_span: 24h
+                header:
+                  show: true
+                  title: "Power Demand"
+                  show_states: false
+                  disable_actions: true
+                series:
+                  - entity: sensor.miniz_json_miner_gpu_0_power_usage
+                    type: area
+                    fill_raw: last
+                    color: blue
+#
+          - type: horizontal-stack
+            cards:
+              - type: gauge
+                name: Clock Core
+                unit: 'MHz'
+                entity: sensor.miniz_json_miner_gpu_0_clock_core_max
+                min: 1000
+                max: 1700
+                severity:
+                  blue: 1200
+                  green: 1500
+                  red: 1600
+#
+              - type: custom:apexcharts-card
+                graph_span: 24h
+                header:
+                  show: true
+                  title: "Memory Clock"
+                  show_states: false
+                  disable_actions: true
+                series:
+                  - entity: sensor.miniz_json_miner_gpu_0_clock_memory
+                    type: area
+                    fill_raw: last
+                    color: purple
+#
+          - type: entities
+            title: "GPU 0"
+            entities:
+              - entity: sensor.miniz_json_miner_gpu_0_name
+                name: GPU
+              - entity: sensor.miniz_json_miner_gpu_0_fan_speed
+                name: Fan Speed
+              - entity: sensor.miniz_json_miner_gpu_0_accepted_shares
+                name: Accepted Shares
+              - entity: sensor.miniz_json_miner_gpu_0_rejected_shares
+                name: Rejected Shares
+              - entity: sensor.miniz_json_miner_gpu_0_mode
+                name: Mode
+              - entity: sensor.miniz_json_miner_gpu_0_ocx
+                name: Over Clock X
+#
+#
+# GPU 1 SECTION
+      - type: vertical-stack
+        cards:
+#
+          - type: gauge
+            entity: sensor.miniz_json_miner_gpu_1_temperature
+            name: "GPU 1 Temperature"
+            needle: true
+            min: 40
+            max: 90
+            severity:
+              blue: 0
+              yellow: 58
+              red: 61
+#
+          - type: horizontal-stack
+            cards:
+              - type: custom:apexcharts-card
+                graph_span: 24h
+                header:
+                  show: true
+                  title: "Sols/second"
+                  show_states: false
+                  disable_actions: true
+                series:
+                  - entity: sensor.miniz_json_miner_gpu_1_sps
+                    type: area
+                    fill_raw: last
+                    color: yellow
+#
+              - type: custom:apexcharts-card
+                graph_span: 24h
+                header:
+                  show: true
+                  title: "Power Demand"
+                  show_states: false
+                  disable_actions: true
+                series:
+                  - entity: sensor.miniz_json_miner_gpu_1_power_usage
+                    type: area
+                    fill_raw: last
+                    color: blue
+#
+          - type: horizontal-stack
+            cards:
+              - type: gauge
+                name: Clock Core
+                unit: 'MHz'
+                entity: sensor.miniz_json_miner_gpu_1_clock_core_max
+                min: 1000
+                max: 1800
+                severity:
+                  blue: 1000
+                  green: 1300
+                  red: 1600
+#
+              - type: custom:apexcharts-card
+                graph_span: 24h
+                header:
+                  show: true
+                  title: "Memory Clock"
+                  show_states: false
+                  disable_actions: true
+                series:
+                  - entity: sensor.miniz_json_miner_gpu_1_clock_memory
+                    type: area
+                    fill_raw: last
+                    color: purple
+#
+          - type: entities
+            title: "GPU 1"
+            entities:
+              - entity: sensor.miniz_json_miner_gpu_1_name
+                name: GPU
+              - entity: sensor.miniz_json_miner_gpu_1_fan_speed
+                name: Fan Speed
+              - entity: sensor.miniz_json_miner_gpu_1_accepted_shares
+                name: Accepted Shares
+              - entity: sensor.miniz_json_miner_gpu_1_rejected_shares
+                name: Rejected Shares
+              - entity: sensor.miniz_json_miner_gpu_1_mode
+                name: Mode
+              - entity: sensor.miniz_json_miner_gpu_1_ocx
+                name: Over Clock X
+#
+#
+# GPU 2 SECTION
+      - type: vertical-stack
+        cards:
+#
+          - type: gauge
+            entity: sensor.miniz_json_miner_gpu_2_temperature
+            name: "GPU 2 Temperature"
+            needle: true
+            min: 40
+            max: 90
+            severity:
+              blue: 0
+              yellow: 58
+              red: 61
+#
+          - type: horizontal-stack
+            cards:
+              - type: custom:apexcharts-card
+                graph_span: 24h
+                header:
+                  show: true
+                  title: "Sols/second"
+                  show_states: false
+                  disable_actions: true
+                series:
+                  - entity: sensor.miniz_json_miner_gpu_2_sps
+                    type: area
+                    fill_raw: last
+                    color: yellow
+#
+              - type: custom:apexcharts-card
+                graph_span: 24h
+                header:
+                  show: true
+                  title: "Power Demand"
+                  show_states: false
+                  disable_actions: true
+                series:
+                  - entity: sensor.miniz_json_miner_gpu_2_power_usage
+                    type: area
+                    fill_raw: last
+                    color: blue
+#
+          - type: horizontal-stack
+            cards:
+#
+              - type: gauge
+                name: Clock Core
+                unit: 'MHz'
+                entity: sensor.miniz_json_miner_gpu_2_clock_core_max
+                min: 1000
+                max: 1500
+                severity:
+                  blue: 1200
+                  green: 1300
+                  red: 1400
+#
+              - type: custom:apexcharts-card
+                graph_span: 24h
+                header:
+                  show: true
+                  title: "Memory Clock"
+                  show_states: false
+                  disable_actions: true
+                series:
+                  - entity: sensor.miniz_json_miner_gpu_2_clock_memory
+                    type: area
+                    fill_raw: last
+                    color: purple
+#
+          - type: entities
+            title: "GPU 2"
+            entities:
+              - entity: sensor.miniz_json_miner_gpu_2_name
+                name: GPU
+              - entity: sensor.miniz_json_miner_gpu_2_fan_speed
+                name: Fan Speed
+              - entity: sensor.miniz_json_miner_gpu_2_accepted_shares
+                name: Accepted Shares
+              - entity: sensor.miniz_json_miner_gpu_2_rejected_shares
+                name: Rejected Shares
+              - entity: sensor.miniz_json_miner_gpu_2_mode
+                name: Mode
+              - entity: sensor.miniz_json_miner_gpu_2_ocx
+                name: Over Clock X
+
