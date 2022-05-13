@@ -319,6 +319,7 @@ sensor:
         unit_of_measurement: "shares"
 #
 # MinerPool Stats
+# Change to your flux wallet address
 #
   - platform: rest
     name: minerpool_flux_data
