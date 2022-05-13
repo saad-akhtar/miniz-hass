@@ -3,7 +3,7 @@
 #
 #
 # Paste this in your Home-Assistant ui-lovelace.yaml. This will create a POW (Proof of Work) tab in your UI.
-#
+# I have tested this with a rig that has 3 gpus. You can simply copy paste the gpu sections below to match the number you have in yours.
 #
 resources:
   - url: /hacsfiles/lovelace-clock-card/clock-card.js
