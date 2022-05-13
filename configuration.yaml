@@ -1,1 +1,360 @@
-# backend of the integration where json data is being pulled via rest platform, into sensors and their attributes for display.
+# miniz-hass https://github.com/saad-akhtar/miniz-hass
+# Backend of the integration where json data is being pulled via rest platform, into sensors and their attributes for display.
+#
+# Note:
+#       Change value for "resource" to your miner's IP. Be sure that you can access your miniz web interface via your web browser to make
+#       sure that these rest entities can grab data from there.
+sensor:
+  - platform: rest
+    name: miniz_json_miner
+    resource: http://192.168.1.205:20000/getstat
+#    json_attributes_path: "$."
+    json_attributes:
+      - start_time
+      - version
+      - algorithm
+      - pers
+      - current_server
+      - server_latency
+    value_template: "OK"
+    timeout: 60
+  - platform: template
+    sensors:
+#
+      miniz_miner_start_time:
+        value_template: "{{ state_attr('sensor.miniz_json_miner', 'start_time') }}"
+        friendly_name: "MiniZ Miner Start Time"
+        unique_id: minizjsonminerstarttime
+        #device_class: timestamp
+#
+      miniz_miner_version:
+        value_template: "{{ state_attr('sensor.miniz_json_miner', 'version') }}"
+        friendly_name: "MiniZ Miner Version"
+        unique_id: minizjsonminerversion
+#
+      miniz_miner_algo:
+        value_template: "{{ state_attr('sensor.miniz_json_miner', 'algorithm') }}"
+        friendly_name: "MiniZ Miner ALGO"
+        unique_id: minizjsonmineralgo
+#
+      miniz_miner_pers:
+        value_template: "{{ state_attr('sensor.miniz_json_miner', 'pers') }}"
+        friendly_name: "MiniZ Miner PERS"
+        unique_id: minizjsonminerpers
+#
+      miniz_miner_current_server:
+        value_template: "{{ state_attr('sensor.miniz_json_miner', 'current_server') }}"
+        friendly_name: "MiniZ Miner Current Server"
+        unique_id: minizjsonminercurrentserver
+#
+      miniz_miner_server_latency:
+        value_template: "{{ state_attr('sensor.miniz_json_miner', 'server_latency') }}"
+        friendly_name: "MiniZ Miner Server Latency"
+        unique_id: minizjsonminerserverlatency
+        unit_of_measurement: "ms"
+#
+# MINIZ DATA VIA JSON
+#
+# GPU 0
+#
+  - platform: rest
+    name: miniz_json_miner_gpu_0
+    resource: http://192.168.1.205:20000/getstat
+    json_attributes_path: "$.result.[0]"
+    json_attributes:
+      - name
+      - mode
+      - ocX
+      - temperature
+      - gpu_fan_speed
+      - gpu_power_usage
+      - gpu_clock_core_max
+      - gpu_clock_memory
+      - speed_sps
+      - accepted_shares
+      - rejected_shares
+    value_template: "OK"
+    timeout: 60
+  - platform: template
+    sensors:
+#
+      miniz_json_miner_gpu_0_name:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_0', 'name') }}"
+        friendly_name: "MiniZ GPU 0 Name"
+        unique_id: minizgpu0name
+#
+      miniz_json_miner_gpu_0_mode:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_0', 'mode') }}"
+        friendly_name: "MiniZ GPU 0 Mode"
+        unique_id: minizgpu0mode
+#
+      miniz_json_miner_gpu_0_ocx:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_0', 'ocX') }}"
+        friendly_name: "MiniZ GPU 0 OCX"
+        unique_id: minizgpu0ocx
+#
+      miniz_json_miner_gpu_0_temperature:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_0', 'temperature') }}"
+        friendly_name: "MiniZ GPU 0 Temp"
+        device_class: temperature
+        unit_of_measurement: "°F"
+        unique_id: minizgpu0temp
+#
+      miniz_json_miner_gpu_0_fan_speed:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_0', 'gpu_fan_speed') }}"
+        friendly_name: "MiniZ GPU 0 Fan Speed"
+        unique_id: minizgpu0fanspeed
+        unit_of_measurement: "%"
+#
+      miniz_json_miner_gpu_0_power_usage:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_0', 'gpu_power_usage') }}"
+        friendly_name: "MiniZ GPU 0 Power Usage"
+        unique_id: minizgpu0powerusage
+        unit_of_measurement: "watts"
+#
+      miniz_json_miner_gpu_0_clock_core_max:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_0', 'gpu_clock_core_max') }}"
+        friendly_name: "MiniZ GPU 0 Max Core Clock"
+        unique_id: minizgpu0clockcoremax
+        unit_of_measurement: "MHz"
+#
+      miniz_json_miner_gpu_0_clock_memory:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_0', 'gpu_clock_memory') }}"
+        friendly_name: "MiniZ GPU 0 Memory Clock"
+        unique_id: minizgpu0clockmemory
+        unit_of_measurement: "MHz"
+#
+      miniz_json_miner_gpu_0_sps:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_0', 'speed_sps') }}"
+        friendly_name: "MiniZ GPU 0 SOLS/S"
+        unique_id: minizgpu0solutionspersecond
+        unit_of_measurement: "Sols/s"
+#
+      miniz_json_miner_gpu_0_accepted_shares:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_0', 'accepted_shares') }}"
+        friendly_name: "MiniZ GPU 0 Accepted Shares"
+        unique_id: minizgpu0acceptedshares
+        unit_of_measurement: "shares"
+#
+      miniz_json_miner_gpu_0_rejected_shares:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_0', 'rejected_shares') }}"
+        friendly_name: "MiniZ GPU 0 Rejected Shares"
+        unique_id: minizgpu0rejectedshares
+        unit_of_measurement: "shares"
+#
+#
+# GPU 1
+#
+  - platform: rest
+    name: miniz_json_miner_gpu_1
+    resource: http://192.168.1.205:20000/getstat
+    json_attributes_path: "$.result.[1]"
+    json_attributes:
+      - name
+      - mode
+      - ocX
+      - temperature
+      - gpu_fan_speed
+      - gpu_power_usage
+      - gpu_clock_core_max
+      - gpu_clock_memory
+      - speed_sps
+      - accepted_shares
+      - rejected_shares
+    value_template: "OK"
+    timeout: 60
+  - platform: template
+    sensors:
+#
+      miniz_json_miner_gpu_1_name:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_1', 'name') }}"
+        friendly_name: "MiniZ GPU 1 Name"
+        unique_id: minizgpu1name
+#
+      miniz_json_miner_gpu_1_mode:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_1', 'mode') }}"
+        friendly_name: "MiniZ GPU 1 Mode"
+        unique_id: minizgpu1mode
+#
+      miniz_json_miner_gpu_1_ocx:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_1', 'ocX') }}"
+        friendly_name: "MiniZ GPU 1 OCX"
+        unique_id: minizgpu1ocx
+#
+      miniz_json_miner_gpu_1_temperature:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_1', 'temperature') }}"
+        friendly_name: "MiniZ GPU 1 Temp"
+        device_class: temperature
+        unit_of_measurement: "°F"
+        unique_id: minizgpu1temp
+#
+      miniz_json_miner_gpu_1_fan_speed:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_1', 'gpu_fan_speed') }}"
+        friendly_name: "MiniZ GPU 1 Fan Speed"
+        unique_id: minizgpu1fanspeed
+        unit_of_measurement: "%"
+#
+      miniz_json_miner_gpu_1_power_usage:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_1', 'gpu_power_usage') }}"
+        friendly_name: "MiniZ GPU 1 Power Usage"
+        unique_id: minizgpu1powerusage
+        unit_of_measurement: "watts"
+#
+      miniz_json_miner_gpu_1_clock_core_max:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_1', 'gpu_clock_core_max') }}"
+        friendly_name: "MiniZ GPU 1 Max Core Clock"
+        unique_id: minizgpu1clockcoremax
+        unit_of_measurement: "MHz"
+#
+      miniz_json_miner_gpu_1_clock_memory:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_1', 'gpu_clock_memory') }}"
+        friendly_name: "MiniZ GPU 1 Memory Clock"
+        unique_id: minizgpu1clockmemory
+        unit_of_measurement: "MHz"
+#
+      miniz_json_miner_gpu_1_sps:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_1', 'speed_sps') }}"
+        friendly_name: "MiniZ GPU 1 SOLS/S"
+        unique_id: minizgpu1solutionspersecond
+        unit_of_measurement: "Sols/s"
+#
+      miniz_json_miner_gpu_1_accepted_shares:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_1', 'accepted_shares') }}"
+        friendly_name: "MiniZ GPU 1 Accepted Shares"
+        unique_id: minizgpu1acceptedshares
+        unit_of_measurement: "shares"
+#
+      miniz_json_miner_gpu_1_rejected_shares:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_1', 'rejected_shares') }}"
+        friendly_name: "MiniZ GPU 1 Rejected Shares"
+        unique_id: minizgpu1rejectedshares
+        unit_of_measurement: "shares"
+#
+#
+# GPU 2
+#
+  - platform: rest
+    name: miniz_json_miner_gpu_2
+    resource: http://192.168.1.205:20000/getstat
+    json_attributes_path: "$.result.[2]"
+    json_attributes:
+      - name
+      - mode
+      - ocX
+      - temperature
+      - gpu_fan_speed
+      - gpu_power_usage
+      - gpu_clock_core_max
+      - gpu_clock_memory
+      - speed_sps
+      - accepted_shares
+      - rejected_shares
+    value_template: "OK"
+    timeout: 60
+  - platform: template
+    sensors:
+#
+      miniz_json_miner_gpu_2_name:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_2', 'name') }}"
+        friendly_name: "MiniZ GPU 2 Name"
+        unique_id: minizgpu2name
+#
+      miniz_json_miner_gpu_2_mode:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_2', 'mode') }}"
+        friendly_name: "MiniZ GPU 2 Mode"
+        unique_id: minizgpu2mode
+#
+      miniz_json_miner_gpu_2_ocx:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_2', 'ocX') }}"
+        friendly_name: "MiniZ GPU 2 OCX"
+        unique_id: minizgpu2ocx
+#
+      miniz_json_miner_gpu_2_temperature:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_2', 'temperature') }}"
+        friendly_name: "MiniZ GPU 2 Temp"
+        device_class: temperature
+        unit_of_measurement: "°F"
+        unique_id: minizgpu2temp
+#
+      miniz_json_miner_gpu_2_fan_speed:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_2', 'gpu_fan_speed') }}"
+        friendly_name: "MiniZ GPU 2 Fan Speed"
+        unique_id: minizgpu2fanspeed
+        unit_of_measurement: "%"
+#
+      miniz_json_miner_gpu_2_power_usage:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_2', 'gpu_power_usage') }}"
+        friendly_name: "MiniZ GPU 2 Power Usage"
+        unique_id: minizgpu2powerusage
+        unit_of_measurement: "watts"
+#
+      miniz_json_miner_gpu_2_clock_core_max:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_2', 'gpu_clock_core_max') }}"
+        friendly_name: "MiniZ GPU 2 Max Core Clock"
+        unique_id: minizgpu2clockcoremax
+        unit_of_measurement: "MHz"
+#
+      miniz_json_miner_gpu_2_clock_memory:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_2', 'gpu_clock_memory') }}"
+        friendly_name: "MiniZ GPU 2 Memory Clock"
+        unique_id: minizgpu2clockmemory
+        unit_of_measurement: "MHz"
+#
+      miniz_json_miner_gpu_2_sps:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_2', 'speed_sps') }}"
+        friendly_name: "MiniZ GPU 2 SOLS/S"
+        unique_id: minizgpu2solutionspersecond
+        unit_of_measurement: "Sols/s"
+#
+      miniz_json_miner_gpu_2_accepted_shares:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_2', 'accepted_shares') }}"
+        friendly_name: "MiniZ GPU 2 Accepted Shares"
+        unique_id: minizgpu2acceptedshares
+        unit_of_measurement: "shares"
+#
+      miniz_json_miner_gpu_2_rejected_shares:
+        value_template: "{{ state_attr('sensor.miniz_json_miner_gpu_2', 'rejected_shares') }}"
+        friendly_name: "MiniZ GPU 2 Rejected Shares"
+        unique_id: minizgpu2rejectedshares
+        unit_of_measurement: "shares"
+#
+# MinerPool Stats
+#
+  - platform: rest
+    name: minerpool_flux_data
+    resource: https://flux.minerpool.org/api/worker_stats?address=t1UrUfYwhhfaPZCTQbp5RCZEDTSBr2stYq8
+#    json_attributes_path: "$."
+    json_attributes:
+      - totalHash
+      - immature
+      - balance
+      - paid
+    value_template: "OK"
+    timeout: 60
+  - platform: template
+    sensors:
+#
+      minerpool_flux_data_reported_hash:
+        value_template: "{{ state_attr('sensor.minerpool_flux_data', 'totalHash') | round(2) }}"
+        friendly_name: "MinerPool Reported Hash Rate"
+        unique_id: minerpoolfluxreportedhash
+        unit_of_measurement: "Sols/s"
+#
+      minerpool_flux_data_immature_balance:
+        value_template: "{{ state_attr('sensor.minerpool_flux_data', 'immature') | round(4) }}"
+        friendly_name: "MinerPool Immature Balance"
+        unique_id: minerpoolfluximmaturebalance
+        unit_of_measurement: "FLUX"
+#
+      minerpool_flux_data_confirmed_balance:
+        value_template: "{{ state_attr('sensor.minerpool_flux_data', 'balance') | round(4) }}"
+        friendly_name: "MinerPool Confirmed Balanace"
+        unique_id: minerpoolfluxconfirmedbalance
+        unit_of_measurement: "FLUX"
+#
+      minerpool_flux_data_paid_flux:
+        value_template: "{{ state_attr('sensor.minerpool_flux_data', 'paid') | round(4) }}"
+        friendly_name: "MinerPool Paid Out FLUX"
+        unique_id: minerpoolfluxpaidout
+        unit_of_measurement: "FLUX"
+#
