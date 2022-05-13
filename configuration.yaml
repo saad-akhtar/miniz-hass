@@ -1,9 +1,13 @@
 # miniz-hass https://github.com/saad-akhtar/miniz-hass
 # Backend of the integration where json data is being pulled via rest platform, into sensors and their attributes for display.
 #
+#
+# Paste this in your Home-Assistant configuration.yaml or append the sensors: section.
 # Note:
-#       Change value for "resource" to your miner's IP. Be sure that you can access your miniz web interface via your web browser to make
+#     * Change value for "resource" to your miner's IP. Be sure that you can access your miniz web interface via your web browser to make
 #       sure that these rest entities can grab data from there.
+#     * Change wallet address for the minerpool rest integration (line #327)
+#
 sensor:
   - platform: rest
     name: miniz_json_miner
