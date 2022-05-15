@@ -14,7 +14,9 @@ Following integrations are required and can easily be installed via HACS (lookup
   * Gauge Card (https://www.home-assistant.io/dashboards/gauge/)
   * Vertical Stack In Card (https://github.com/ofekashery/vertical-stack-in-card)
   * Apex-Charts Card (https://github.com/RomRider/apexcharts-card)
+  * Bar-Card (https://github.com/custom-cards/bar-card)
 
 I can provide some further help if needed. open a new issue in project.
 
 ![hass-ui](https://github.com/saad-akhtar/miniz-hass/raw/main/hass-ui.png)
+![hass-ui](https://github.com/saad-akhtar/miniz-hass/raw/main/hass-ui-1.png)
