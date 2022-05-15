@@ -10,10 +10,10 @@ Using a file editor plugin in HASS, edit your configuration.yaml and add code un
 Using file editor again now edit ui-lovelace.yaml (this controls the UI or display part of things). Paste code from the ui-lovelace.yaml file. If you already have other itegrations/UI components in your ui-lovelace.yaml then be sure to copy paste the contents of resources: under resources: and remove the title: / views: section (since you already have one).
 
 Following integrations are required and can easily be installed via HACS (lookup HACS setup on home-assistant.io)
-  * Lovelace Clock Card
-  * Gauge Card
-  * Vertical Stack In Card
-  * Apex-Charts Card
+  * Lovelace Clock Card (https://github.com/Villhellm/lovelace-clock-card)
+  * Gauge Card (https://www.home-assistant.io/dashboards/gauge/)
+  * Vertical Stack In Card (https://github.com/ofekashery/vertical-stack-in-card)
+  * Apex-Charts Card (https://github.com/RomRider/apexcharts-card)
 
 I can provide some further help if needed. open a new issue in project.
 
