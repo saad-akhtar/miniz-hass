@@ -47,8 +47,19 @@ views:
                 name: MiniZ Startup
               - entity: sensor.minerpool_flux_data_immature_balance
                 name: Immature Balance
-              - entity: sensor.minerpool_flux_data_confirmed_balance
-                name: Confirmed Balance
+              - type: 'custom:bar-card'
+                entities:
+                  - entity: sensor.minerpool_flux_data_confirmed_balance
+                    unit: 'HNT'
+                    name: Confirmed Balance
+                    color: blue
+                    entity_row: false
+                    height: 30
+                    positions:
+                      icon: off
+                      minmax: inside
+                    min: 0
+                    max: 30
               - entity: sensor.minerpool_flux_data_paid_flux
                 name: Total FLUX Paid
               - entity: sensor.miniz_miner_current_server
